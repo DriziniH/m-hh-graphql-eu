@@ -19,10 +19,11 @@ const context = async () => {
         )
 
         if (!dbClient.isConnected()) await dbClient.connect()
-        db = dbClient.db('M-HH') // database name
+        db = dbClient.db('M-HH')
     } catch (e) {
         console.log('--->error while connecting with graphql context (db)', e)
     }
+
 
     return { db }
 }
@@ -36,7 +37,6 @@ const server = new ApolloServer({
     resolvers,
     dataSources,
     context
-
 });
 
 server.listen().then(() => {
