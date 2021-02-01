@@ -1,18 +1,9 @@
 module.exports = {
     Query: {
-        getCarEU: async (_, { id }, context) => { //{dataSources},
-            return await context.db.collection("processed").findOne({ "_id": id, "_unit": process.env.UNIT_ID_EU })
+        fetchVehicle: async (_, { id }, context) => { //{dataSources},
+            return await context.db.collection("processed").findOne({ "_id": id})
         },
-        getCarUSA: async (_, { id }, context) => {
-            return await context.db.collection("processed").findOne({ "_id": id, "_unit": process.env.UNIT_ID_USA })
-        },
-        getCarChina: async (_, { id }, context) => {
-            return await context.db.collection("processed").findOne({ "_id": id, "_unit": process.env.UNIT_ID_CHINA })
-        }
-
-        ,
-        getAnalysis: async (_, __, context) => {
-            console.log(context.db.collection("analysis").find({}).toArray())
+        fetchAnalyticResults: async (_, __, context) => {
             return await context.db.collection("analysis").find({}).toArray()
         }
     }

@@ -12,7 +12,7 @@ class MongoAPI extends DataSource {
         this.context = config.context;
     };
 
-    async getCar({ id },  context ) {
+    async fetchCar({ id },  context ) {
         return await context.db.collection("processed").findOne({ "_id": id })
     };
 
