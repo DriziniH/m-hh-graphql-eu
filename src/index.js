@@ -5,7 +5,7 @@ const typeDefs = require('./schema');
 const MongoAPI = require('./datasources/mongodb');
 const resolvers = require('./resolvers');
 const MongoClient = require('mongodb').MongoClient;
-
+const { buildFederatedSchema } = require("@apollo/federation");
 
 const context = async () => {
     try {
@@ -24,7 +24,6 @@ const context = async () => {
         console.log('--->error while connecting with graphql context (db)', e)
     }
 
-
     return { db }
 }
 
@@ -33,14 +32,11 @@ const dataSources = () => ({
 });
 
 const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    schema: buildFederatedSchema([{ typeDefs, resolvers }]),
     dataSources,
     context
 });
 
-server.listen().then(() => {
-    console.log(
-        "Running on http://localhost:4000/graphql"
-    );
+server.listen(4002).then(({ url }) => {
+    console.log(`Running on ${url}`);
 });
