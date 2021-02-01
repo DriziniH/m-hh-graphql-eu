@@ -1,15 +1,16 @@
 require('dotenv').config()
 
 const { ApolloServer } = require('apollo-server');
-const typeDefs = require('./schema');
+const typeDefsEU = require('./schema_eu');
+const typeDefsUSA = require('./schema_usa');
 const MongoAPI = require('./datasources/mongodb');
-const resolvers = require('./resolvers');
+const resolversEU = require('./resolvers_eu');
+const resolversUSA = require('./resolvers_usa');
 const MongoClient = require('mongodb').MongoClient;
 const { buildFederatedSchema } = require("@apollo/federation");
 
 const context = async () => {
     try {
-        const dotenv = require('dotenv').config()
         const dbClient = new MongoClient(
             process.env.MONGO_DB_URI,
             {
@@ -31,12 +32,22 @@ const dataSources = () => ({
     mongoDB: new MongoAPI()
 });
 
-const server = new ApolloServer({
-    schema: buildFederatedSchema([{ typeDefs, resolvers }]),
+const serverEU = new ApolloServer({
+    schema: buildFederatedSchema([{ typeDefs: typeDefsEU, resolvers: resolversEU }]),
     dataSources,
     context
 });
 
-server.listen(4001).then(({ url }) => {
+const serverUSA = new ApolloServer({
+    schema: buildFederatedSchema([{ typeDefs: typeDefsUSA, resolvers: resolversUSA }]),
+    dataSources,
+    context
+});
+
+serverEU.listen(4001).then(({ url }) => {
+    console.log(`Running on ${url}`);
+});
+
+serverUSA.listen(4002).then(({ url }) => {
     console.log(`Running on ${url}`);
 });
