@@ -3,17 +3,17 @@ const { gql } = require('apollo-server');
 
 const typeDefs = gql`
 type Query {
-    fetchVehicle(id: ID!) : Vehicle
-    fetchAnalyticResults : [AnalyticResults]
+    fetchCar(id: ID!) : Car
+    fetchAnalyticResults: [AnalyticResults]
 }
 
-type Vehicle{
+type Car{
   _id : ID!
   _unit: ID
   timestamp: Float
-  
-  kilometerTotal: Float
-  kilometerStart: Float
+
+  kilometerTotal:Float
+  kilometerStart:Float
   kmh: Float
 
   model: String

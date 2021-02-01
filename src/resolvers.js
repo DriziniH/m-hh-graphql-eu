@@ -1,6 +1,6 @@
 module.exports = {
     Query: {
-        fetchVehicle: async (_, { id }, context) => { //{dataSources},
+        fetchCar: async (_, { id }, context) => { //{dataSources},
             return await context.db.collection("processed").findOne({ "_id": id})
         },
         fetchAnalyticResults: async (_, __, context) => {

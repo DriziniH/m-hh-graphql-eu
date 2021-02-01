@@ -24,7 +24,6 @@ const context = async () => {
         console.log('--->error while connecting with graphql context (db)', e)
     }
 
-
     return { db }
 }
 
