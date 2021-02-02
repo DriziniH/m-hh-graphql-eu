@@ -13,6 +13,7 @@
     "@apollo/federation": "^0.21.0",
     "apollo-server": "^2.19.2",
     "dotenv": "^8.2.0",
+    "eureka-js-client": "^4.5.0",
     "graphql": "^15.4.0",
     "mongodb": "^3.6.3"
   }
