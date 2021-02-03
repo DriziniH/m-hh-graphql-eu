@@ -18,6 +18,7 @@ const eurekaEU = new Eureka({
     },
     vipAddress: 'eu-service',
     instanceId: uuidv4(),
+    heartbeatInterval : 10000,
     dataCenterInfo: {
       '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
       name: 'MyOwn',
@@ -44,6 +45,7 @@ const eurekaEU2 = new Eureka({
     },
     vipAddress: 'eu-service',
     instanceId: uuidv4(),
+    heartbeatInterval : 10000,
     dataCenterInfo: {
       '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
       name: 'MyOwn',
@@ -70,6 +72,7 @@ const eurekaUSA = new Eureka({
     },
     vipAddress: 'usa-service',
     instanceId: uuidv4(),
+    heartbeatInterval : 10000,
     dataCenterInfo: {
       '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
       name: 'MyOwn',
