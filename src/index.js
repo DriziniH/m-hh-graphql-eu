@@ -48,6 +48,22 @@ const serverUSA = new ApolloServer({
     context
 });
 
+function exitHandler() {
+    eurekaEU.stop();
+    eurekaEU2.stop();
+    eurekaUSA.stop();
+}
+
+eurekaEU.on('deregistered', () => {
+    process.exit();
+});
+
+eurekaUSA.on('deregistered', () => {
+    process.exit();
+});
+
+process.on('SIGINT', exitHandler);
+
 
 serverEU.listen(portEU).then(({ url }) => {
     console.log("Registering with Eureka for EU instance...");
@@ -73,3 +89,4 @@ serverUSA.listen(portUSA).then(({ url }) => {
     });
     console.log(`Running on ${url}`);
 });
+
