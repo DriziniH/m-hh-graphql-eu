@@ -1,8 +1,8 @@
 const { Eureka } = require('eureka-js-client');
+const { v4: uuidv4 }  = require('uuid');
 
 const portEU = 4001;
 const portUSA = 4002;
-const portEU2 = 4003;
 
 
 const eurekaEU = new Eureka({
@@ -10,12 +10,14 @@ const eurekaEU = new Eureka({
   instance: {
     app: 'EU-SERVICE',
     hostName: 'localhost',
-    ipAddr: '127.0.0.1',
+    ipAddr: '0.0.0.0', //use hostname as ip addr
+    statusPageUrl: `http://localhost:${portEU}`,
     port: {
       '$': portEU,
       '@enabled': 'true',
     },
-    vipAddress: 'jq.test.something.com',
+    vipAddress: 'eu-service',
+    instanceId: uuidv4(),
     dataCenterInfo: {
       '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
       name: 'MyOwn',
@@ -34,12 +36,14 @@ const eurekaEU2 = new Eureka({
   instance: {
     app: 'EU-SERVICE',
     hostName: 'localhost',
-    ipAddr: '127.0.0.1',
+    ipAddr: '0.0.0.0',
+    statusPageUrl: `http://localhost:${portEU}`,
     port: {
-      '$': portEU2,
+      '$': portEU,
       '@enabled': 'true',
     },
-    vipAddress: 'jq.test.something.com',
+    vipAddress: 'eu-service',
+    instanceId: uuidv4(),
     dataCenterInfo: {
       '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
       name: 'MyOwn',
@@ -59,11 +63,13 @@ const eurekaUSA = new Eureka({
     app: 'USA-SERVICE',
     hostName: 'localhost',
     ipAddr: '127.0.0.1',
+    statusPageUrl: `http://localhost:${portUSA}`,
     port: {
       '$': portUSA,
       '@enabled': 'true',
     },
-    vipAddress: 'jq.test.something.com',
+    vipAddress: 'usa-service',
+    instanceId: uuidv4(),
     dataCenterInfo: {
       '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
       name: 'MyOwn',
