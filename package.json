@@ -1,5 +1,5 @@
 {
-  "name": "M-HH-graphql-apollo",
+  "name": "m-hh-graphql-apollo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -16,6 +16,7 @@
     "eureka-js-client": "^4.5.0",
     "graphql": "^15.4.0",
     "mongodb": "^3.6.3",
+    "node": "^15.7.0",
     "uuid": "^8.3.2"
   }
 }

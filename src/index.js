@@ -8,7 +8,7 @@ const resolversEU = require('./resolvers_eu');
 const resolversUSA = require('./resolvers_usa');
 const MongoClient = require('mongodb').MongoClient;
 const { buildFederatedSchema } = require("@apollo/federation");
-const { eurekaEU, eurekaEU2, eurekaUSA } = require('./eureka/eureka_client')
+const { eurekaEU, eurekaUSA } = require('./eureka_client')
 
 const portEU = 4001;
 const portUSA = 4002;
@@ -50,7 +50,6 @@ const serverUSA = new ApolloServer({
 
 function exitHandler() {
     eurekaEU.stop();
-    eurekaEU2.stop();
     eurekaUSA.stop();
 }
 
@@ -68,11 +67,6 @@ process.on('SIGINT', exitHandler);
 serverEU.listen(portEU).then(({ url }) => {
     console.log("Registering with Eureka for EU instance...");
     eurekaEU.start(function (error) {
-        if (error) {
-            console.log(error);
-        }
-    });
-    eurekaEU2.start(function (error) {
         if (error) {
             console.log(error);
         }

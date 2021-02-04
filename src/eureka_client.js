@@ -32,33 +32,6 @@ const eurekaEU = new Eureka({
   },
 });
 
-const eurekaEU2 = new Eureka({
-  //cwd: `${__dirname}/config`,
-  instance: {
-    app: 'EU-SERVICE',
-    hostName: 'localhost',
-    ipAddr: '0.0.0.0',
-    statusPageUrl: `http://localhost:${portEU}`,
-    port: {
-      '$': portEU,
-      '@enabled': 'true',
-    },
-    vipAddress: 'eu-service',
-    instanceId: uuidv4(),
-    heartbeatInterval : 10000,
-    dataCenterInfo: {
-      '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
-      name: 'MyOwn',
-    },
-  },
-  eureka: {
-    // eureka server host / port
-    host: 'localhost',
-    port: 8761,
-    servicePath: '/eureka/apps/'
-  },
-});
-
 const eurekaUSA = new Eureka({
   //cwd: `${__dirname}/config`,
   instance: {
@@ -86,4 +59,4 @@ const eurekaUSA = new Eureka({
   },
 });
 
-module.exports = { eurekaEU, eurekaEU2, eurekaUSA };
+module.exports = { eurekaEU, eurekaUSA };
