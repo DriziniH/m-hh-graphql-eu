@@ -1,24 +1,22 @@
 const { Eureka } = require('eureka-js-client');
-const { v4: uuidv4 }  = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
-const portEU = 4001;
-const portUSA = 4002;
+const port = 4001;
 
-
-const eurekaEU = new Eureka({
+const eurekaClient = new Eureka({
   //cwd: `${__dirname}/config`,
   instance: {
     app: 'EU-SERVICE',
     hostName: 'localhost',
     ipAddr: '0.0.0.0', //use hostname as ip addr
-    statusPageUrl: `http://localhost:${portEU}`,
+    statusPageUrl: `http://localhost:${port}`,
     port: {
-      '$': portEU,
+      '$': port,
       '@enabled': 'true',
     },
     vipAddress: 'eu-service',
     instanceId: uuidv4(),
-    heartbeatInterval : 10000,
+    heartbeatInterval: 10000,
     dataCenterInfo: {
       '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
       name: 'MyOwn',
@@ -32,31 +30,4 @@ const eurekaEU = new Eureka({
   },
 });
 
-const eurekaUSA = new Eureka({
-  //cwd: `${__dirname}/config`,
-  instance: {
-    app: 'USA-SERVICE',
-    hostName: 'localhost',
-    ipAddr: '127.0.0.1',
-    statusPageUrl: `http://localhost:${portUSA}`,
-    port: {
-      '$': portUSA,
-      '@enabled': 'true',
-    },
-    vipAddress: 'usa-service',
-    instanceId: uuidv4(),
-    heartbeatInterval : 10000,
-    dataCenterInfo: {
-      '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
-      name: 'MyOwn',
-    },
-  },
-  eureka: {
-    // eureka server host / port
-    host: 'localhost',
-    port: 8761,
-    servicePath: '/eureka/apps/'
-  },
-});
-
-module.exports = { eurekaEU, eurekaUSA };
+module.exports = { eurekaClient }

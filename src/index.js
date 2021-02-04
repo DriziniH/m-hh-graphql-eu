@@ -1,17 +1,13 @@
 require('dotenv').config()
 
 const { ApolloServer } = require('apollo-server');
-const typeDefsEU = require('./schema_eu');
-const typeDefsUSA = require('./schema_usa');
+const typeDefs = require('./schema');
 const MongoAPI = require('./datasources/mongodb');
-const resolversEU = require('./resolvers_eu');
-const resolversUSA = require('./resolvers_usa');
+const resolvers = require('./resolvers');
 const MongoClient = require('mongodb').MongoClient;
-const { buildFederatedSchema } = require("@apollo/federation");
-const { eurekaEU, eurekaUSA } = require('./eureka_client')
+const { eurekaClient } = require('./eureka_client')
 
-const portEU = 4001;
-const portUSA = 4002;
+const port = 4001;
 
 const context = async () => {
     try {
@@ -37,36 +33,26 @@ const dataSources = () => ({
 });
 
 const serverEU = new ApolloServer({
-    schema: buildFederatedSchema([{ typeDefs: typeDefsEU, resolvers: resolversEU }]),
-    dataSources,
-    context
-});
-
-const serverUSA = new ApolloServer({
-    schema: buildFederatedSchema([{ typeDefs: typeDefsUSA, resolvers: resolversUSA }]),
+    typeDefs, 
+    resolvers,
     dataSources,
     context
 });
 
 function exitHandler() {
-    eurekaEU.stop();
-    eurekaUSA.stop();
+    eurekaClient.stop();
 }
 
-eurekaEU.on('deregistered', () => {
-    process.exit();
-});
-
-eurekaUSA.on('deregistered', () => {
+eurekaClient.on('deregistered', () => {
     process.exit();
 });
 
 process.on('SIGINT', exitHandler);
 
 
-serverEU.listen(portEU).then(({ url }) => {
+serverEU.listen(port).then(({ url }) => {
     console.log("Registering with Eureka for EU instance...");
-    eurekaEU.start(function (error) {
+    eurekaClient.start(function (error) {
         if (error) {
             console.log(error);
         }
@@ -74,13 +60,4 @@ serverEU.listen(portEU).then(({ url }) => {
     console.log(`Running on ${url}`);
 });
 
-serverUSA.listen(portUSA).then(({ url }) => {
-    console.log("Registering with Eureka for USA instance...");
-    eurekaUSA.start(function (error) {
-        if (error) {
-            console.log(error);
-        }
-    });
-    console.log(`Running on ${url}`);
-});
 
