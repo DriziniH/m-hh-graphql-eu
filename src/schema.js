@@ -3,13 +3,14 @@ const { gql } = require('apollo-server');
 
 const typeDefs = gql`
 type Query {
-    fetchCar(id: ID!) : Car
-    fetchAnalyticResults: [AnalyticResults]
+    fetchCars: [Car]
+    fetchAnalyticResults: [JsonGraph]
+    fetchAnalyticResultsDriver(id: ID!): [JsonGraph]
 }
 
 type Car{
-  _id : ID!
-  _unit: ID
+  id : ID!
+  unit: ID
   timestamp: Float
 
   kilometerTotal:Float
@@ -63,17 +64,10 @@ type Car{
   infotainmentVolume: Float
 }
 
-type AnalyticResults {
-  _id: ID
-  label: String
-  graphs: [JsonGraph]
-}
-
 type JsonGraph {
-  type: String
   title: String
-  chartType: String
-  jsonGraph: String
+  type : String
+  graph : String
 }
 `;
 

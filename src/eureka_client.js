@@ -6,7 +6,7 @@ const port = 4001;
 const eurekaClient = new Eureka({
   //cwd: `${__dirname}/config`,
   instance: {
-    app: 'EU-SERVICE',
+    app: 'EU-GRAPHQL-SERVICE',
     hostName: 'localhost',
     ipAddr: '0.0.0.0', //use hostname as ip addr
     statusPageUrl: `http://localhost:${port}`,

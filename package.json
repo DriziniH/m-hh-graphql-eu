@@ -1,8 +1,8 @@
 {
-  "name": "m-hh-graphql-apollo",
+  "name": "m-hh-graphql-eu",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,10 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apollo/federation": "^0.21.0",
+    "@elastic/elasticsearch": "^7.11.0",
     "apollo-server": "^2.19.2",
     "dotenv": "^8.2.0",
     "eureka-js-client": "^4.5.0",
+    "express-graphql": "^0.12.0",
     "graphql": "^15.4.0",
     "mongodb": "^3.6.3",
     "node": "^15.7.0",
