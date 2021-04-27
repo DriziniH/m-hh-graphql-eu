@@ -1,5 +1,6 @@
 const { Eureka } = require('eureka-js-client');
 const { v4: uuidv4 } = require('uuid');
+require('dotenv').config()
 
 const port = 4001;
 
@@ -24,8 +25,8 @@ const eurekaClient = new Eureka({
   },
   eureka: {
     // eureka server host / port
-    host: 'localhost',
-    port: 8761,
+    host: process.env.EUREKA_HOST,
+    port: process.env.EUREKA_PORT,
     servicePath: '/eureka/apps/'
   },
 });
