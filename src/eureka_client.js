@@ -25,10 +25,14 @@ const eurekaClient = new Eureka({
   },
   eureka: {
     // eureka server host / port
-    host: process.env.EUREKA_HOST,
-    port: process.env.EUREKA_PORT,
+    host: "localhost",
+    port: 8761,
     servicePath: '/eureka/apps/'
   },
 });
+
+
+eurekaClient.config.eureka.maxRetries = 100;
+eurekaClient.config.eureka.heartbeatInterval = 10000;
 
 module.exports = { eurekaClient }
