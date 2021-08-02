@@ -76,8 +76,16 @@ const getWearingParts = function (wearingParts) {
             ],
         layout: {
             title: "Wearing parts analysis",
-            labelX: "Wearing part",
-            labelY: "Health Status in %"
+            xaxis: {
+                title: {
+                    text: 'Wearing part',
+                }
+            },
+            yaxis: {
+                title: {
+                    text: 'Health Status in %',
+                }
+            }
         }
     });
 
@@ -153,8 +161,16 @@ const getWearingPartsDecrease = function (wearingParts) {
             ],
         layout: {
             title: "Wearing parts analysis",
-            labelX: "Wearing part",
-            labelY: "Health Status in %"
+            xaxis: {
+                title: {
+                    text: 'Wearing part',
+                }
+            },
+            yaxis: {
+                title: {
+                    text: 'Health Status in %',
+                }
+            }
         }
     });
 
@@ -177,8 +193,71 @@ module.exports = {
                 index: "wearing-parts-decrease",
                 body: { query: { match_all: {} }, sort }
             }
+            var requestConsumptionEmission = {
+                index: "consumption-emission",
+                body: { query: { match_all: {} } }
+            }
 
             var wearingPartsDecrease = await dataSources.elastic.fetchData(requestWearingParts);
+            var consumptionEmission = await dataSources.elastic.fetchData(requestConsumptionEmission);
+
+            var consumptionChart = JSON.stringify({
+                data:
+                    [{
+                        x: consumptionEmission.map(row => row.model),
+                        y: consumptionEmission.map(row => row.consumptionKm),
+                        type: "bar"
+                    }],
+                layout: {
+                    title: "Consumption per model",
+                    xaxis: {
+                        title: {
+                            text: 'Model',
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Liter / 100 KM',
+                        }
+                    }
+                }
+            });
+
+            var emissionChart = JSON.stringify({
+                data:
+                    [{
+                        x: consumptionEmission.map(row => row.model),
+                        y: consumptionEmission.map(row => row.co2Km),
+                        type: "bar"
+                    }],
+                layout: {
+                    title: "Emission per model",
+                    xaxis: {
+                        title: {
+                            text: 'Model',
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'g CO2/KM',
+                        }
+                    }
+                }
+            });
+
+            charts.push({
+                title: "Consumption per model",
+                chartType: "bar",
+                graph: consumptionChart
+            }
+            )
+
+            charts.push({
+                title: "Emission per model",
+                chartType: "bar",
+                graph: emissionChart
+            }
+            )
 
             charts.push({
                 title: "Wearing parts analysis",
@@ -234,8 +313,16 @@ module.exports = {
                     }],
                 layout: {
                     title: "Average fuel consumption",
-                    labelX: "",
-                    labelY: "l/KM"
+                    xaxis: {
+                        title: {
+                            text: 'Model',
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Liter / 100 KM',
+                        }
+                    }
                 }
             });
             charts.push({
@@ -254,8 +341,11 @@ module.exports = {
                     }],
                 layout: {
                     title: "Average RPM values",
-                    labelX: "",
-                    labelY: "line"
+                    yaxis: {
+                        title: {
+                            text: 'RPM',
+                        }
+                    }
                 }
             });
             charts.push({
@@ -275,8 +365,6 @@ module.exports = {
                     }],
                 layout: {
                     title: "Breaking behaviour",
-                    labelX: "",
-                    labelY: "Break used"
                 }
             });
             charts.push({
